@@ -77,11 +77,11 @@
 
     NSNumber *priceNumber = [command argumentAtIndex:0 withDefault: nil andClass: [NSNumber class]];
     NSDecimalNumber *price = nil;
-    
+
     if (priceNumber) {
         price = [NSDecimalNumber decimalNumberWithDecimal:[priceNumber decimalValue]];
     }
-    
+
     [self.commandDelegate runInBackground:^{
         [Answers logAddToCartWithPrice:price
                               currency:[command argumentAtIndex:1 withDefault: nil]
@@ -96,11 +96,11 @@
 
     NSNumber *priceNumber = [command argumentAtIndex:0 withDefault: nil andClass: [NSNumber class]];
     NSDecimalNumber *price = nil;
-    
+
     if (priceNumber) {
         price = [NSDecimalNumber decimalNumberWithDecimal:[priceNumber decimalValue]];
     }
-    
+
     [self.commandDelegate runInBackground:^{
         [Answers logStartCheckoutWithPrice:price
                                   currency:[command argumentAtIndex:1 withDefault: nil]
@@ -110,7 +110,7 @@
 }
 
 -(void) sendSearch:(CDVInvokedUrlCommand *)command {
-    
+
     [self.commandDelegate runInBackground:^{
         [Answers logSearchWithQuery:[command argumentAtIndex:0 withDefault: nil]
                    customAttributes:[command argumentAtIndex:1 withDefault: nil]];
@@ -118,7 +118,7 @@
 }
 
 -(void) sendShare:(CDVInvokedUrlCommand *)command {
-    
+
     [self.commandDelegate runInBackground:^{
         [Answers logShareWithMethod:[command argumentAtIndex:0 withDefault: nil]
                         contentName:[command argumentAtIndex:1 withDefault: nil]
@@ -129,7 +129,7 @@
 }
 
 -(void) sendRatedContent:(CDVInvokedUrlCommand *)command {
-    
+
     [self.commandDelegate runInBackground:^{
         [Answers logRating:[command argumentAtIndex:0 withDefault: nil]
                contentName:[command argumentAtIndex:1 withDefault: nil]
@@ -140,7 +140,7 @@
 }
 
 -(void) sendSignUp:(CDVInvokedUrlCommand *)command {
-    
+
     [self.commandDelegate runInBackground:^{
         [Answers logSignUpWithMethod:[command argumentAtIndex:0 withDefault: nil]
                              success:[command argumentAtIndex:1 withDefault: nil]
@@ -149,7 +149,7 @@
 }
 
 -(void) sendLogIn:(CDVInvokedUrlCommand *)command {
-    
+
     [self.commandDelegate runInBackground:^{
         [Answers logLoginWithMethod:[command argumentAtIndex:0 withDefault: nil]
                             success:[command argumentAtIndex:1 withDefault: nil]
@@ -158,7 +158,7 @@
 }
 
 -(void) sendInvite:(CDVInvokedUrlCommand *)command {
-    
+
     [self.commandDelegate runInBackground:^{
         [Answers logInviteWithMethod:[command argumentAtIndex:0 withDefault: nil]
                     customAttributes:[command argumentAtIndex:1 withDefault: nil]];
@@ -166,7 +166,7 @@
 }
 
 -(void) sendLevelStart:(CDVInvokedUrlCommand *)command {
-    
+
     [self.commandDelegate runInBackground:^{
         [Answers logLevelStart:[command argumentAtIndex:0 withDefault: nil]
               customAttributes:[command argumentAtIndex:1 withDefault: nil]];
@@ -174,7 +174,7 @@
 }
 
 -(void) sendLevelEnd:(CDVInvokedUrlCommand *)command {
-    
+
     [self.commandDelegate runInBackground:^{
         [Answers logLevelEnd:[command argumentAtIndex:0 withDefault: nil]
                        score:[command argumentAtIndex:1 withDefault: nil]
@@ -205,12 +205,6 @@
 
 - (void)addLog:(CDVInvokedUrlCommand*)command
 {
-    NSString *logMessage = [command argumentAtIndex:0 withDefault:@""];
-
-    if(logMessage)
-    {
-        CLSNSLog(@"%@",logMessage);
-    }
 }
 
 - (void)setUserIdentifier:(CDVInvokedUrlCommand*)command
@@ -296,14 +290,14 @@
 {
     NSString *description = NSLocalizedString([command argumentAtIndex:0 withDefault:@"No Message Provided"], nil);
     NSDictionary *userInfo = @{ NSLocalizedDescriptionKey: description };
-    
+
     NSNumber *defaultCode = [NSNumber numberWithInt:-1];
     int code = [[command argumentAtIndex:1 withDefault:defaultCode] intValue];
-    
+
     NSString *domain = [[NSBundle mainBundle] bundleIdentifier];
-    
+
     NSError *error = [NSError errorWithDomain: domain code: code userInfo: userInfo];
-    
+
     [[Crashlytics sharedInstance] recordError:error];
 }
 
